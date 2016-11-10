@@ -3,19 +3,26 @@ Install Monitor Engine (Ubuntu 14.04-CENTOS)
 1. Install python psutil library
 	
 	-Ubuntu
+	
 	sudo apt-get install python-psutil
 	
-	-CentOS
+	-CentOS:
+	
 	curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
+	
 	python get-pip.py
+	
 	sudo yum install gcc python-devel
+	
 	pip install psutil
 	
 2. Install python numpy library
 	-Ubuntu
+	
 	sudo apt-get install python-numpy
 
 	-CentOS
+	
 	sudo yum install numpy scipy
 
 3. Create the monitor.py
