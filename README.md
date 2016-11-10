@@ -27,6 +27,8 @@ Install Monitor Engine (Ubuntu 14.04-CENTOS)
 
 3. Create the monitor.py
 
+Make sure you change the filename in the script (e.g. c170.csv).
+
 
 4. Create the key.pem
 
