@@ -5,8 +5,11 @@ import csv
 import os
 import numpy as np
 import datetime
+
 elements = []
 total_time = []
+
+csvfile = "cassandra-workloada.csv"
 
 from datetime import datetime
 count = 10
@@ -22,44 +25,28 @@ def printit():
     util_level = "medium"
   if cpu_percent >=66:
     util_level = "high"
-  #print cpu_percent , util_level
-  # set the x string with parameters from psutil
-  u = util_level
-  #ts =datetime.now()
 
+  u = util_level
   x = psutil.cpu_times() + (psutil.cpu_percent(interval=1),) + psutil.virtual_memory() + psutil.swap_memory() + psutil.disk_usage('/') + psutil.disk_io_counters() + (u,)
-  #print "psutil.cpu_times(): ", psutil.cpu_times()
-  #print "psutil.cpu_percent(interval=1): ", psutil.cpu_percent(interval=1)
-  #print "psutil.virtual_memory(): ", psutil.virtual_memory()
-  #print "psutil.swap_memory(): ", psutil.swap_memory()
-  #print "psutil.disk_usage('/'): ",psutil.disk_usage('/')
-  #print "psutil.disk_io_counters(): ", psutil.disk_io_counters()
-  #print "------------"
-  #print "------------"
-  #print psutil.disk_usage('/')
-  #print psutil.disk_io_counters()
+
   elements.append(x)
-  myfile = open("cassandra-workloada.csv", 'wb')
+  myfile = open(csvfile, 'wb')
   wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-  wr.writerow(["CPU user","CPU nice","CPU system","CPU idle","CPU iowait", "CPU irq", "CPU softirq","CPU steal", "CPU guest", "CPU guest nice","CPU percent","VMem total","VMem available","VMem percent","VMem used","VMem free", "VMem acti$
-  wr.writerows(elements)
+  wr.writerow(["CPU user","CPU nice","CPU system","CPU idle","CPU iowait", "CPU irq", "CPU softirq","CPU steal", "CPU guest", "CPU guest nice","CPU percent","VMem total","VMem available","VMem percent","VMem used","VMem free", "VMem active", "Vmem inactive","VMem buffers", "VMem cached","Swap total", "Swap used", "Swap free","Swap percent","Swap sin","Swap sout","Disk usage total", "Disk usage used","Disk usage free","Disk usage percent","IO read count","IO write count","IO read bytes","IO write bytes","IO read time","IO write time","IO read merged count", "IO write merged count" ,"IO busy time", "UtilLevel"])
   global count
-  #print len(elements)
-  #print elements[-1]
-  #print len(elements)
+  wr.writerows(elements)  
   size = len(elements)
   end = time.time()
   elapsed = end - start
   total_time.append(elapsed)
-  #print sum(total_time)
-  #print datetime.now()
+  print elements[-1]
   if size == count:
     #print "Elapsed time:", elapsed
     count = count + copy_delay
     print "Count: ", count
     start = time.time()
     # connect to VM and upload scv file
-    #os.system("scp -i key.pem cassandra-test2.csv ubuntu@147.27.50.177:/var/www")
+    os.system("scp -i key.pem " + csvfile + " ubuntu@147.27.50.177:/var/www")
     end = time.time()
     elapsed = end - start
     #print "Elapsed time:", elapsed
